@@ -10,7 +10,9 @@
 // your platform doesn't support thread_local, you can switch to static, but be aware that this makes the code not thread safe.
 // For Windows in Visual Studio 2019 on Intel 64-bit using thread_local causes a dependency to VCRUNTIME140_1.dll, so you need 2019
 // runtime DLLs instead of only 2015 version.
-#define ZX_THREAD_LOCAL thread_local // '' (nothing), 'thread_local' or 'static'
+// The ESP32 firmware (Zephyr/Xtensa) has no thread-local storage support and
+// the QR decoder runs single-threaded, so use plain static storage.
+#define ZX_THREAD_LOCAL static // '' (nothing), 'thread_local' or 'static'
 
 // The Galois Field abstractions used in Reed-Solomon error correction code use more memory than required to improve performance (20% - 100%).
 // If RAM is scarce, you can define LIBRSCPP_SAVE_MEMORY to reduce memory usage. The effect is a few kB big.
